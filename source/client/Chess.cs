@@ -1,6 +1,6 @@
-using CoreLogic;
+using Core;
 using Client.Properties;
-using static CoreLogic.GameUtil;
+using static Core.GameUtil;
 using static Microsoft.VisualBasic.Interaction;
 
 namespace Client

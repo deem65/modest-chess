@@ -1,4 +1,4 @@
-﻿namespace CoreLogic
+﻿namespace Core
 {
     /// <summary>
     /// A class which holds all infomation about a board

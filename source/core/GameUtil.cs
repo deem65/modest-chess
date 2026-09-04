@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace CoreLogic
+namespace Core
 {
     /// <summary>
     /// static class which has all methods to work with a board, it can check for checkmate, stalemate, checks, draws, move pieces, check is move is valid, find possible moves, and more.

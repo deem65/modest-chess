@@ -1,4 +1,4 @@
-﻿namespace CoreLogic
+﻿namespace Core
 {
     /// <summary>
     /// an abtract class which holds all infomation about a piece. 

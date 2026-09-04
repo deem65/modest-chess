@@ -1,8 +1,6 @@
-﻿using CoreLogic;
+﻿namespace Core.Tests;
 
-namespace Core.Tests;
-
-public class BoardModelTests
+public partial class BoardModelTests
 {
     private readonly BoardModel b = new();
     private readonly Type[] backRank =
@@ -18,46 +16,21 @@ public class BoardModelTests
         ];
 
     [Fact]
-    public void TestStartingPosition()
+    public void AssertStartingPosition()
     {
         AssertStartingPieces();
         AssertEmptySquares();
     }
 
-    private void AssertEmptySquares()
+    [Fact]
+    public void Assert64Squares()
     {
-        for (int i = 16; i < 48; i++)
-        {
-            Assert.Null(b.Board[i].Piece);
-        }
+        Assert.Equal(64, b.Board.Length);
     }
 
-    private void AssertStartingPieces()
+    [Fact]
+    public void Assert32Pieces()
     {
-        for (int i = 0; i < 8; i++)
-        {
-            AssertPiece(i, backRank[i], 0);
-            AssertPiece<Pawn>(i + 8, 0);
-            AssertPiece<Pawn>(i + 48, 1);
-            AssertPiece(i + 56, backRank[i], 1);
-        }
-    }
-
-    private void AssertPiece(int i, Type t, int colorId)
-    {
-        Piece? p = b.Board[i].Piece;
-
-        Assert.NotNull(p);
-        Assert.Equal(t, p.GetType());
-        Assert.Equal(colorId, p.ColorId);
-    }
-
-    private void AssertPiece<T>(int index, int colorId) where T : Piece
-    {
-        Piece? p = b.Board[index].Piece;
-
-        Assert.NotNull(p);
-        Assert.IsType<T>(p);
-        Assert.Equal(colorId, p.ColorId);
+        Assert.Equal(32, b.Board.Count(s => s.Piece != null));
     }
 }
