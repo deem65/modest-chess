@@ -1,9 +1,9 @@
-using ChessGameLogic;
-using ChessGameUI.Properties;
-using static ChessGameLogic.GameUtil;
+using CoreLogic;
+using Client.Properties;
+using static CoreLogic.GameUtil;
 using static Microsoft.VisualBasic.Interaction;
 
-namespace ChessGameUI
+namespace Client
 {
     public partial class Chess : Form
     {

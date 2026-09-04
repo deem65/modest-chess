@@ -1,4 +1,4 @@
-namespace ChessGameUI
+namespace Client
 {
     internal static class Program
     {

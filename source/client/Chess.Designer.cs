@@ -1,4 +1,4 @@
-﻿namespace ChessGameUI
+﻿namespace Client
 {
     partial class Chess
     {
@@ -980,7 +980,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Chess";
-            Text = "ChessGame - made by deem";
+            Text = "Core - made by deem";
             Load += Chess_Load;
             ResumeLayout(false);
             PerformLayout();

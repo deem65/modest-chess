@@ -1,11 +1,11 @@
-﻿using ChessGameLogic;
+﻿using CoreLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessGameLogic
+namespace CoreLogic
 {
     /// <summary>
     /// an abtract class which holds all infomation about a piece. 

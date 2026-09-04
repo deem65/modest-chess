@@ -1,4 +1,4 @@
-﻿namespace ChessGameLogic
+﻿namespace CoreLogic
 {
     /// <summary>
     /// a square object holds the position it's at and which piece is holds. if it's empty then piece = null, therefore Piece is nullable.

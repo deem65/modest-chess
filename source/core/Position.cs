@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ChessGameLogic
+namespace CoreLogic
 {
     /// <summary>
     /// A struct to hold infomation about a Position for example (1, 1). Board[0] would be (1, 1), and Board[63] would be (8, 8)

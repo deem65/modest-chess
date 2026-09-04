@@ -1,4 +1,4 @@
-﻿namespace ChessGameLogic
+﻿namespace CoreLogic
 {
     class Program
     {
