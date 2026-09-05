@@ -33,16 +33,12 @@
                 }
                 i++;
                 currentNode = currentNode.Next;            
-            }
-
-            
-
-            
+            } 
         }
         void ProcessNumberString(ref Position pos, ref int i, string square)
         {
             int skippedLoops = Convert.ToInt32(square);
-            for (int ח = GameUtil.CoordsToIndex(pos.X, pos.Y); ח < GameUtil.CoordsToIndex(pos.X, pos.Y) + skippedLoops- 1; ח++)
+            for (int ח = GameUtil.CTI(pos.X, pos.Y); ח < GameUtil.CTI(pos.X, pos.Y) + skippedLoops- 1; ח++)
             {
                 if (i % 8 != 0)
                 {
@@ -128,10 +124,7 @@
             }
             return pos;
         }
-        /// <summary>
-        /// temporary, just for console.
-        /// </summary>
-        public override string ToString()
+        public override string ToString() //console debugging
         {
             string final;
             final = "  ";
@@ -148,6 +141,10 @@
                 final += Board[i].ToString() + " ";
             }
             return final;
+        }
+        public Square GetSquare(Position pos)
+        {
+            return Board[GameUtil.CTI(pos.X, pos.Y)];
         }
 
     }

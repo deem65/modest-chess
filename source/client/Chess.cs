@@ -7,7 +7,7 @@ namespace Client
 {
     public partial class Chess : Form
     {
-        private BoardModel BoardModel { get; set; }
+        private GameState Game { get; set; }
         private Button[]? Squares { get; set; } = null;
         private bool IsSelecting { get; set; }
         private bool IsFirst { get; set; } = true;
@@ -35,18 +35,18 @@ namespace Client
         {
             if (sender is not Button clickedButton) return;
             int squareIndex = int.Parse(clickedButton.Name[2..]);
-            (int x, int y) coordinates = IndexToCoords(squareIndex);
+            (int x, int y) coordinates = ITC(squareIndex);
             int x = coordinates.x, y = coordinates.y;
             if (IsSelecting)
             {
                 PossibleMoves.Text = string.Empty;
 
-                string? pieceChar = BoardModel.Board[squareIndex].Piece?.GetType().Name;
+                string? pieceChar = Game.Board.Board[squareIndex].Piece?.GetType().Name;
 
                 PossibleMoves.Text += $"Possible moves for {Environment.NewLine}{pieceChar}: {new Position(x, y)}:{Environment.NewLine}{Environment.NewLine}";
-                if (BoardModel.Board[squareIndex].Piece != null)
+                if (Game.Board.Board[squareIndex].Piece != null)
                 {
-                    TPossibleMoves = FindMoves(BoardModel, BoardModel.Board[squareIndex]);
+                    TPossibleMoves = FindMoves(Game.Board, Game.Board.Board[squareIndex]);
                     foreach (Position move in TPossibleMoves)
                     {
                         PossibleMoves.AppendText(move.ToString() + Environment.NewLine);
@@ -58,8 +58,13 @@ namespace Client
             else
             { 
                 Position movingTo = new(x, y);
-                bool succeeded = TryMove(BoardModel, MovingFrom, movingTo, false);
-                string colorString = BoardModel.Board[CoordsToIndex(x: MovingFrom.X, y: MovingFrom.Y)].Piece.ColorId == 0 ? "White" : "Black";
+                bool succeeded = TryMove(Game.Board, MovingFrom, movingTo, false);
+                Piece? piece = Game.Board.GetSquare(MovingFrom).Piece;
+
+                if (piece == null)
+                    return;
+
+                string colorString = piece.ColorId == 0 ? "White" : "Black"; 
                 if (!succeeded)
                 {
                     Log.AppendText(Environment.NewLine + "Could not move, try again");
@@ -67,7 +72,7 @@ namespace Client
                 }
                 else
                 {
-                    TryMove(BoardModel, MovingFrom, movingTo);
+                    TryMove(Game.Board, MovingFrom, movingTo);
                     Log.AppendText($"{Environment.NewLine}{colorString} {MovingFrom} to {new Position(x, y)}");
                     RefreshBoard();
                 }
@@ -82,7 +87,7 @@ namespace Client
             {
                 for (int i = 0; i < Squares.Length; i++)
                 {
-                    Square? tSquare = BoardModel.Board[i];
+                    Square? tSquare = Game.Board.Board[i];
                     if (tSquare.Piece != null)
                     {
                         int pieceTypeIndex = GetTypeIndex(tSquare.Piece.GetType());
@@ -103,19 +108,19 @@ namespace Client
 
             for (int player = 0; player <= 1; player++)
             {
-                if (GameUtil.IsInCheckmate(player, BoardModel))
+                if (GameUtil.IsInCheckmate(player, Game.Board))
                 {
                     MessageBox.Show($"{players[player]} in checkmate");
                 }
-                else if (GameUtil.IsInStalemate(player, BoardModel))
+                else if (GameUtil.IsInStalemate(player, Game.Board))
                 {
                     MessageBox.Show($"{players[player]} in stalemate");
                 }
-                else if (GameUtil.IsInCheck(player, BoardModel))
+                else if (GameUtil.IsInCheck(player, Game.Board))
                 {
                     MessageBox.Show($"{players[player]} in check");
                 }
-                else if (GameUtil.IsDraw(BoardModel))
+                else if (GameUtil.IsDraw(Game.Board))
                 {
                     MessageBox.Show($"Draw");
                 }
@@ -158,7 +163,7 @@ namespace Client
         private void NewGameButton_Click(object sender, EventArgs e)
         {
 
-            BoardModel = new();
+            Game = new();
             IsSelecting = true;
             TPossibleMoves = [];
 
@@ -201,8 +206,8 @@ namespace Client
                 "Custom board creation");
                 if (boardInput != null || boardInput == string.Empty)
                 {
-                    BoardModel = new(boardInput);
-                    RefreshBoard();
+                     Game = new();
+                     RefreshBoard();
                 }                
             }
             //catch
